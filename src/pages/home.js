@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import BearerAuthButton from "../components/bearer-auth-button";
-import LoginButton from "../components/login-button";
+import BearerAuthButton from "../components/common/bearer-auth-button";
+import LoginButton from "../components/common/login-button";
 
 const NoteSection = styled.div`
   display: flex;

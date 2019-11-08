@@ -10,15 +10,6 @@ import {
   TasksPage
 } from './index'
 
-console.log({
-  AboutPage,
-  CalendarPage,
-  HomePage,
-  LoginPage,
-  ProfilePage,
-  TasksPage
-});
-
 const pageMapping = {
   'about': AboutPage,
   'calendar': CalendarPage,
@@ -28,15 +19,12 @@ const pageMapping = {
   'tasks': TasksPage
 }
 
-console.log(pageMapping)
-
 const getPageByLocation = (location) => {
   const path = (
     (location.pathname.split('/')[1]) ||
     'home'
   )
   const Page = pageMapping[path]
-  console.log({Page, path})
   return <Page />
 }
 
