@@ -8,14 +8,11 @@ const NoteSection = styled.div`
   display: flex;
   align-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: black;
   flex-direction: column;
 
   p {
     margin: 0 auto;
-    color: yellow;
+    color: black;
   }
 `;
 

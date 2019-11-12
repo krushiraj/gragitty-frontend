@@ -5,9 +5,9 @@ import Layout from '../pages'
 
 function App() {
   return (
-    <div className="App">
+    <div className="text-center bg-white">
       <Router>
-        <Route path='/*' component={Layout}/>
+        <Route path="/*" component={Layout} />
       </Router>
     </div>
   );

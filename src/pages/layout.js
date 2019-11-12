@@ -1,6 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router";
 
+import NavLayout from "../components/common/nav-layout"
+
 import {
   AboutPage,
   CalendarPage,
@@ -30,9 +32,9 @@ const getPageByLocation = (location) => {
 
 export default withRouter(({ location }) => {
   return (
-  <div className="mt-4">
-    This is Layout page
-    {getPageByLocation(location)}
-  </div>
-  )
+    <div className="m-0">
+      <NavLayout />
+      <div className="p-4 mx-64">{getPageByLocation(location)}</div>
+    </div>
+  );
 });
