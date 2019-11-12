@@ -30,7 +30,7 @@ const getPageByLocation = (location) => {
 
 export default withRouter(({ location }) => {
   return (
-  <div>
+  <div className="mt-4">
     This is Layout page
     {getPageByLocation(location)}
   </div>

@@ -8,7 +8,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App/App";
 
-import "./styles.css";
+import "./index.css";
 
 const GITHUB_BASE_URL = "https://api.github.com/graphql";
 
