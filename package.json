@@ -23,7 +23,7 @@
   "scripts": {
     "build:styles": "postcss src/styles/index.css -o src/index.css",
     "watch:styles": "postcss src/styles/index.css -o src/index.css -w",
-    "start": "react-scripts start",
+    "start": "react-scripts start && npm run watch:styles",
     "build": "npm run build:styles && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
