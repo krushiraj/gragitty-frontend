@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import BearerAuthButton from "../components/common/bearer-auth-button";
-import LoginButton from "../components/common/login-button";
 
 const NoteSection = styled.div`
   display: flex;
@@ -16,7 +15,7 @@ const NoteSection = styled.div`
   }
 `;
 
-export default () => (
+export default ({search}) => (
   <NoteSection>
     <p>
       Welcome to <i>Gragitty</i>. This site is currently under development,
@@ -26,6 +25,7 @@ export default () => (
       You must have email and name set for your profile to access this service.
       Make sure that you have those set by checking it{" "}
       <a
+        className="bg-green-100 border-b-1 hover:bg-green-400 hover:border-red-200"
         href="https://github.com/settings/profile"
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +34,6 @@ export default () => (
       </a>
       .{" "}
     </p>
-    <LoginButton />
     <BearerAuthButton />
   </NoteSection>
 );
