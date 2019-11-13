@@ -21,20 +21,22 @@ const pageMapping = {
   'tasks': TasksPage
 }
 
-const getPageByLocation = (location) => {
-  const path = (
-    (location.pathname.split('/')[1]) ||
-    'home'
-  )
+const getPathFromLocation = (location) => (
+  (location.pathname.split('/')[1]) ||
+  'home'
+)
+
+const getPageByPath = (path) => {
   const Page = pageMapping[path]
   return <Page />
 }
 
 export default withRouter(({ location }) => {
+  const path = getPathFromLocation(location)
   return (
     <div className="m-0">
-      <NavLayout />
-      <div className="p-4 mx-64">{getPageByLocation(location)}</div>
+      <NavLayout page={path} />
+      <div className="p-4 mx-64">{getPageByPath(path)}</div>
     </div>
   );
 });
