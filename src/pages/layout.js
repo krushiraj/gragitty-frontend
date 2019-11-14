@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { getCookie } from "../utils/cookie";
+import { isLoggedIn } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
 
 const getPathFromPathName = (pathname) => (
@@ -48,13 +48,9 @@ const getPageByLocation = (path, search, isLoggedIn) => {
 
 export default withRouter(({ location: {pathname, search} }) => {
   const path = getPathFromPathName(pathname)
-  const isLoggedIn = (
-    getCookie("bearer-auth-id", false) &&
-    getCookie("x-token", false)
-  );
   return (
     <div className="m-0">
-      <NavLayout page={path} isLoggedIn={isLoggedIn}/>
+      <NavLayout page={path} isLoggedIn={isLoggedIn()}/>
       <div className="lg:p-4 sm:p-2 lg:mx-64">{getPageByLocation(path, search, isLoggedIn)}</div>
     </div>
   );
