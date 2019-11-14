@@ -79,14 +79,13 @@ export default class LoginPage extends React.Component {
           this.setState({ token, fetched: true }, () => {
             setCookie("x-token", token);
             console.log(getCookie("x-token"));
+            window.prompt("redirecting after login");
+            window.location = "/";
           });
         } else {
           this.setState({ fetched: false })
         }
       }
-    } else {
-      window.prompt('redirecting after login')
-      window.location = '/'
     }
   }
 

@@ -5,7 +5,8 @@ export const setCookie = (name, value, expires) => {
 }
 
 export const getCookie = (name, defaultValue) => {
-  for(const cookie of document.cookie.split(';')) {
+  for(let cookie of document.cookie.split(';')) {
+    cookie = cookie.replace(/^\s+|\s+$/g, "");
     if (cookie.startsWith(name)) {
       return cookie.split('=')[1]
     }
