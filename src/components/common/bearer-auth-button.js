@@ -10,8 +10,7 @@ const { Connect } = factory("github"); // Integration ID
 
 const BearerAuthButton = () => {
   const onSuccess = ({ authId }) => {
-    console.log("AUTH_ID for this user", authId);
-    setCookie(`bearer-auth-id`,authId)
+    setCookie('bearer-auth-id', authId)
     window.location = "/login?bearer-success=true"
   };
   return (
