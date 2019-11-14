@@ -15,7 +15,8 @@ const getSearchObjectFromString = (searchStr) => {
   const kvPairs = searchStr.slice(1).split('&')
   for (let kv of kvPairs) {
     const [key, value] = kv.split('=')
-    search[key] = value;
+    if(key !== '')
+      search[key] = value;
   }
   return search
 }

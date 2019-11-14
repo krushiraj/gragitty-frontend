@@ -12,7 +12,7 @@ const BearerAuthButton = () => {
   const onSuccess = ({ authId }) => {
     console.log("AUTH_ID for this user", authId);
     setCookie(`bearer-auth-id`,authId)
-    window.location = "https://gragitty.herokuapp.com/auth"
+    window.location = "/login?bearer-success=true"
   };
   return (
     // Initialize the Bearer provider with your client ID

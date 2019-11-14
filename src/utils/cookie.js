@@ -1,6 +1,6 @@
 export const setCookie = (name, value, expires) => {
   let date = new Date()
-  date.setTime(date.getTime() + expires)
+  date.setTime(date.getTime() + (expires || 86400000))
   document.cookie = `${name}=${value};expires=${date.toGMTString()}`
 }
 
