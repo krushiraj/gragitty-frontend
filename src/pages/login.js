@@ -31,15 +31,20 @@ const GragittyAuthInfo = ({ success }) =>
   );
 
 const GragittyTokenInfo = ({ token, fetched }) =>
-  getCookie("x-token", false) || console.log({token, fetched}) ? (
+  getCookie("x-token", false) ? (
     <p>
       All details fetched. Loggin you in. <br />
       You'll be redirected to home page in a few moments.
     </p>
-  ) : (!fetched ? (
-    <p>
-      Almost done. Logging you in.
-    </p>
+  ) : !fetched ? (
+    token ? (
+      <p>
+        Token recieved from server. Logging you in. You'll be redirected to home
+        page in a few moments.
+      </p>
+    ) : (
+      <p>Almost done. Fetching the token.</p>
+    )
   ) : (
     <p>
       There is a problem in fetching details. Please try logging in again.{" "}
@@ -56,7 +61,7 @@ const GragittyTokenInfo = ({ token, fetched }) =>
       </a>
       .
     </p>
-  ));
+  );
 
 export default class LoginPage extends React.Component {
   constructor(props) {
@@ -66,20 +71,15 @@ export default class LoginPage extends React.Component {
 
   componentDidMount() {
     const search = this.props.search
-    console.log(search)
     if (this.state.token === '') {
       if (search['bearer-success'] === 'true') {
-        window.prompt("redirecting after bearer");
         window.location = "https://gragitty.herokuapp.com/auth";
       }
       if (search['success'] === 'true') {
         const { auth, newToken, token } = search
-        console.log({ auth, newToken, token });
         if (auth === 'true' && newToken === 'true') {
           this.setState({ token, fetched: true }, () => {
             setCookie("x-token", token);
-            console.log(getCookie("x-token"));
-            window.prompt("redirecting after login");
             window.location = "/";
           });
         } else {
@@ -91,7 +91,6 @@ export default class LoginPage extends React.Component {
 
   render() {
     const search = this.props.search
-    console.log(search)
     return search && (search['bearer-success'] || search.success) ? (
       <div className="flex items-center flex-col h-auto">
         <div className="flex items-center flex-col my-auto">
