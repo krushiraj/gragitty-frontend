@@ -5,7 +5,7 @@ import BearerAuthButton from "../components/common/bearer-auth-button"
 import { getCookie, setCookie } from "../utils/cookie";
 
 const BearerAuthInfo = ({ bearerSuccess }) =>
-  bearerSuccess === "true" && getCookie("bearer-auth-id", false) ? (
+  bearerSuccess === "true" || getCookie("bearer-auth-id", false) ? (
     <p>
       Connected to GitHub... <br />
       All ready to fetch your details from GitHub
@@ -30,10 +30,38 @@ const GragittyAuthInfo = ({ success }) =>
     </p>
   );
 
-class GragittyTokenInfo extends React.Component {
+const GragittyTokenInfo = ({ token, fetched }) =>
+  getCookie("x-token", false) ? (
+    <p>
+      All details fetched. Loggin you in. <br />
+      You'll be redirected to home page in a few moments.
+    </p>
+  ) : (token && !fetched ? (
+    <p>
+      Almost done. Logging you in.
+    </p>
+  ) : (
+    <p>
+      There is a problem in fetching details. Please try logging in again.{" "}
+      <br />
+      If you think there is something wrong at our end please feel free to raise
+      an issue at{" "}
+      <a
+        className="bg-green-100 border-b-1 hover:bg-green-400 hover:border-red-200"
+        href="https://github.com/gragitty/gragitty/issues"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Gragitty issues
+      </a>
+      .
+    </p>
+  ));
+
+export default class LoginPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { token: '' }
+    this.state = { token: '', fetched: false }
   }
 
   componentDidMount() {
@@ -44,9 +72,11 @@ class GragittyTokenInfo extends React.Component {
       }
       if (search['success'] === 'true') {
         fetch("https://gragitty.herokuapp.com/").then(
-          ({ auth, newToken, token }) => {
+          ({ body: { auth, newToken, token } }) => {
             if (auth === true && newToken === true) {
-              this.setState({ token }, () => setCookie("x-token", token));
+              this.setState({ token, fetched: true }, () => {
+                setCookie("x-token", token)
+              });
             }
           }
         );
@@ -55,34 +85,6 @@ class GragittyTokenInfo extends React.Component {
       window.location = '/'
     }
   }
-
-  render() {
-    return getCookie("x-token", false) ? (
-      <p>
-        All details fetched. Loggin you in. <br />
-        You'll be redirected to home page in a few moments.
-      </p>
-    ) : (
-      <p>
-        There is a problem in fetching details. Please try logging in again.{" "}
-        <br />
-        If you think there is something wrong at our end please feel free to
-        raise an issue at{" "}
-        <a
-          className="bg-green-100 border-b-1 hover:bg-green-400 hover:border-red-200"
-          href="https://github.com/gragitty/gragitty/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Gragitty issues
-        </a>
-        .
-      </p>
-    );
-  }
-}
-
-export default class LoginPage extends React.Component {
   render() {
     const search = this.props.search
     console.log(search)
@@ -92,7 +94,7 @@ export default class LoginPage extends React.Component {
           <p>We are logging you in.</p>
           <BearerAuthInfo bearerSuccess={search["bearer-success"]} />
           <GragittyAuthInfo success={search.success} />
-          <GragittyTokenInfo search={search} />
+          <GragittyTokenInfo {...this.state} />
           <Loading />
         </div>
       </div>
