@@ -3,6 +3,7 @@ import React from "react";
 import Loading from "../components/common/loading"
 import BearerAuthButton from "../components/common/bearer-auth-button"
 import { getCookie, setCookie } from "../utils/cookie";
+import axios from "axios";
 
 const BearerAuthInfo = ({ bearerSuccess }) =>
   bearerSuccess === "true" || getCookie("bearer-auth-id", false) ? (
@@ -73,10 +74,10 @@ export default class LoginPage extends React.Component {
         window.location = "https://gragitty.herokuapp.com/auth";
       }
       if (search['success'] === 'true') {
-        fetch("https://gragitty.herokuapp.com/").then(
-          req => {
-            console.log(req)
-            const { body: { auth, newToken, token } } = req
+        axios.get("https://gragitty.herokuapp.com/").then(
+          res => {
+            console.log(res)
+            const { data: { auth, newToken, token } } = res
             if (auth === true && newToken === true) {
               this.setState({ token, fetched: true }, () => {
                 setCookie("x-token", token)
