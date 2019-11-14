@@ -30,7 +30,35 @@ const GragittyAuthInfo = ({ success }) =>
     </p>
   );
 
-class GragittyTokenInfo extends React.Component {
+const GragittyTokenInfo = ({ token, fetched }) =>
+  getCookie("x-token", false) || console.log({token, fetched}) ? (
+    <p>
+      All details fetched. Loggin you in. <br />
+      You'll be redirected to home page in a few moments.
+    </p>
+  ) : (token && !fetched ? (
+    <p>
+      Almost done. Logging you in.
+    </p>
+  ) : (
+    <p>
+      There is a problem in fetching details. Please try logging in again.{" "}
+      <br />
+      If you think there is something wrong at our end please feel free to raise
+      an issue at{" "}
+      <a
+        className="bg-green-100 border-b-1 hover:bg-green-400 hover:border-red-200"
+        href="https://github.com/gragitty/gragitty/issues"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Gragitty issues
+      </a>
+      .
+    </p>
+  ));
+
+export default class LoginPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = { token: '' }
@@ -38,51 +66,32 @@ class GragittyTokenInfo extends React.Component {
 
   componentDidMount() {
     const search = this.props.search
+    console.log(search)
     if (this.state.token === '') {
       if (search['bearer-success'] === 'true') {
+        window.prompt("redirecting after bearer");
         window.location = "https://gragitty.herokuapp.com/auth";
       }
       if (search['success'] === 'true') {
         fetch("https://gragitty.herokuapp.com/").then(
-          ({ auth, newToken, token }) => {
+          req => {
+            console.log(req)
+            const { body: { auth, newToken, token } } = req
             if (auth === true && newToken === true) {
-              this.setState({ token }, () => setCookie("x-token", token));
+              this.setState({ token, fetched: true }, () => {
+                setCookie("x-token", token)
+                console.log(getCookie('x-token'))
+              });
             }
           }
         );
       }
     } else {
+      window.prompt('redirecting after login')
       window.location = '/'
     }
   }
 
-  render() {
-    return getCookie("x-token", false) ? (
-      <p>
-        All details fetched. Loggin you in. <br />
-        You'll be redirected to home page in a few moments.
-      </p>
-    ) : (
-      <p>
-        There is a problem in fetching details. Please try logging in again.{" "}
-        <br />
-        If you think there is something wrong at our end please feel free to
-        raise an issue at{" "}
-        <a
-          className="bg-green-100 border-b-1 hover:bg-green-400 hover:border-red-200"
-          href="https://github.com/gragitty/gragitty/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Gragitty issues
-        </a>
-        .
-      </p>
-    );
-  }
-}
-
-export default class LoginPage extends React.Component {
   render() {
     const search = this.props.search
     console.log(search)
