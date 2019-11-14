@@ -37,7 +37,7 @@ const GragittyTokenInfo = ({ token, fetched }) =>
       All details fetched. Loggin you in. <br />
       You'll be redirected to home page in a few moments.
     </p>
-  ) : (token && !fetched ? (
+  ) : (!fetched ? (
     <p>
       Almost done. Logging you in.
     </p>
@@ -78,10 +78,11 @@ export default class LoginPage extends React.Component {
           res => {
             console.log(res)
             const { data: { auth, newToken, token } } = res
+            console.log({ auth, newToken, token });
             if (auth === true && newToken === true) {
-              this.setState({ token, fetched: true }, () => {
-                setCookie("x-token", token)
-                console.log(getCookie('x-token'))
+              this.setState({ token, fetched: false }, () => {
+                setCookie("x-token", token);
+                console.log(getCookie("x-token"));
               });
             }
           }
