@@ -5,7 +5,7 @@ import BearerAuthButton from "../components/common/bearer-auth-button"
 import { getCookie, setCookie } from "../utils/cookie";
 
 const BearerAuthInfo = ({ bearerSuccess }) =>
-  bearerSuccess === "true" && getCookie("bearer-auth-id", false) ? (
+  bearerSuccess === "true" || getCookie("bearer-auth-id", false) ? (
     <p>
       Connected to GitHub... <br />
       All ready to fetch your details from GitHub
@@ -61,7 +61,7 @@ const GragittyTokenInfo = ({ token, fetched }) =>
 export default class LoginPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { token: '' }
+    this.state = { token: '', fetched: false }
   }
 
   componentDidMount() {
@@ -101,7 +101,7 @@ export default class LoginPage extends React.Component {
           <p>We are logging you in.</p>
           <BearerAuthInfo bearerSuccess={search["bearer-success"]} />
           <GragittyAuthInfo success={search.success} />
-          <GragittyTokenInfo search={search} />
+          <GragittyTokenInfo {...this.state} />
           <Loading />
         </div>
       </div>
