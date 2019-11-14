@@ -15,7 +15,7 @@ const NoteSection = styled.div`
   }
 `;
 
-export default ({search}) => (
+export default ({ search, isLoggedIn }) => (
   <NoteSection>
     <p>
       Welcome to <i>Gragitty</i>. This site is currently under development,
@@ -34,6 +34,6 @@ export default ({search}) => (
       </a>
       .{" "}
     </p>
-    <BearerAuthButton />
+    {isLoggedIn() && <BearerAuthButton />}
   </NoteSection>
 );
