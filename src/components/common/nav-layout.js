@@ -1,7 +1,21 @@
 import React from 'react'
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
-import "../../styles/my-styles.css"
-import { anonymousProfilePicSrc, pageNameToPathMapping } from '../../utils/constants';
+import "../../styles/my-styles.css";
+import {
+  anonymousProfilePicSrc,
+  pageNameToPathMapping
+} from "../../utils/constants";
+
+const GET_CURRENT_USER__USERNAME_PROPIC = gql`
+  {
+    currentUser {
+      name
+      profilePic
+    }
+  }
+`;
 
 const GragittyNavLogo = () => (
   <div className="flex-1 flex items-center">
@@ -39,27 +53,34 @@ const NavToggleButton = () => (
 
 const ProfileMenuItem = ({ isLoggedIn }) => {
   return (
-    <a
-      id="profile"
-      href={`/${isLoggedIn ? "profile" : "login"}`}
-      className="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
-    >
-      {isLoggedIn ? (
-        <img
-          id="profile-pic"
-          className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
-          src="https://pbs.twimg.com/profile_images/1128143121475342337/e8tkhRaz_normal.jpg"
-          alt="Andy Leverenz"
-        />
-      ) : (
-        <img
-          id="login-pic"
-          className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
-          src={anonymousProfilePicSrc}
-          alt="Andy Leverenz"
-        />
+    <Query query={GET_CURRENT_USER__USERNAME_PROPIC}>
+      {({
+        data,
+        loading
+      }) => (
+        <a
+          id="profile"
+          href={`/${isLoggedIn ? "profile" : "login"}`}
+          className="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
+        >
+          {isLoggedIn && !loading && data.currentUser ? (
+            <img
+              id="profile-pic"
+              className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
+              src={data.currentUser.profilePic}
+              alt={data.currentUser.name}
+            />
+          ) : (
+            <img
+              id="login-pic"
+              className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
+              src={anonymousProfilePicSrc}
+              alt="Gragitty User"
+            />
+          )}
+        </a>
       )}
-    </a>
+    </Query>
   );
 }
 
