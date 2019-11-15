@@ -115,6 +115,9 @@ export default class LoginPage extends React.Component {
         .then(({ auth, token, newToken }) => {
           if (auth && newToken) {
             setCookie('x-token', token)
+            console.log('Token has been refreshed', {auth, newToken})
+          } else {
+            console.log('Token has not been refreshed', {auth, newToken})
           }
         })
         .catch(console.error);
