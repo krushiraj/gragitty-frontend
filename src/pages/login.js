@@ -112,7 +112,11 @@ export default class LoginPage extends React.Component {
         method: "GET"
       })
         .then(res => res.json())
-        .then(console.log)
+        .then(({ auth, token, newToken }) => {
+          if (auth && newToken) {
+            setCookie('x-token', token)
+          }
+        })
         .catch(console.error);
     }
     const search = this.props.search
