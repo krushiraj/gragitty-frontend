@@ -34,6 +34,6 @@ export default ({ search, isLoggedIn }) => (
       </a>
       .{" "}
     </p>
-    {isLoggedIn() && <BearerAuthButton />}
+    {!isLoggedIn() && <BearerAuthButton />}
   </NoteSection>
 );
