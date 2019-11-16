@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { isLoggedIn } from "../utils/constants";
+import { checkLoggedIn } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
 
 const getPathFromPathName = (pathname) => (
@@ -24,9 +24,13 @@ const getSearchObjectFromString = (searchStr) => {
 const getPageByLocation = (path, search, isLoggedIn) => {
   const { page, isPrivate, redirectUrl } = pageMapping[path]
   const Page = page
-
+  // console.log({
+  //   page, isLoggedIn, isPrivate, redirectUrl
+  // })
   if (isPrivate) {
+    // console.log('is private')
     if(isLoggedIn) {
+      // console.log('is logged in')
       return (
         <Page
           search={getSearchObjectFromString(search)}
@@ -34,6 +38,7 @@ const getPageByLocation = (path, search, isLoggedIn) => {
         />
       );
     } else {
+      // console.log('redirecting')
       window.location = redirectUrl || masterRedirectUrl;
     }
   } else {
@@ -48,10 +53,14 @@ const getPageByLocation = (path, search, isLoggedIn) => {
 
 export default withRouter(({ location: {pathname, search} }) => {
   const path = getPathFromPathName(pathname)
+  const [isLoggedIn, setLoggedIn] = useState(false)
+  checkLoggedIn(setLoggedIn);
   return (
     <div className="m-0">
-      <NavLayout page={path} isLoggedIn={isLoggedIn()}/>
-      <div className="lg:p-4 sm:p-2 lg:mx-64">{getPageByLocation(path, search, isLoggedIn)}</div>
+      <NavLayout page={path} isLoggedIn={isLoggedIn}/>
+      <div className="lg:p-4 sm:p-2 lg:mx-64">
+        {getPageByLocation(path, search, isLoggedIn)}
+      </div>
     </div>
   );
 });
