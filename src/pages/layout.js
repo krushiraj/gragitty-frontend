@@ -24,9 +24,13 @@ const getSearchObjectFromString = (searchStr) => {
 const getPageByLocation = (path, search, isLoggedIn) => {
   const { page, isPrivate, redirectUrl } = pageMapping[path]
   const Page = page
-
+  // console.log({
+  //   page, isLoggedIn, isPrivate, redirectUrl
+  // })
   if (isPrivate) {
+    // console.log('is private')
     if(isLoggedIn) {
+      // console.log('is logged in')
       return (
         <Page
           search={getSearchObjectFromString(search)}
@@ -34,6 +38,7 @@ const getPageByLocation = (path, search, isLoggedIn) => {
         />
       );
     } else {
+      // console.log('redirecting')
       window.location = redirectUrl || masterRedirectUrl;
     }
   } else {
@@ -50,11 +55,12 @@ export default withRouter(({ location: {pathname, search} }) => {
   const path = getPathFromPathName(pathname)
   const [isLoggedIn, setLoggedIn] = useState(false)
   checkLoggedIn(setLoggedIn);
-  console.log({isLoggedIn})
   return (
     <div className="m-0">
       <NavLayout page={path} isLoggedIn={isLoggedIn}/>
-      <div className="lg:p-4 sm:p-2 lg:mx-64">{getPageByLocation(path, search, isLoggedIn)}</div>
+      <div className="lg:p-4 sm:p-2 lg:mx-64">
+        {getPageByLocation(path, search, isLoggedIn)}
+      </div>
     </div>
   );
 });

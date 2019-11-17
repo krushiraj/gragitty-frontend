@@ -3,26 +3,35 @@ import ReactDOM from "react-dom";
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./App/App";
 
 import "./index.css";
+import { getCookie } from "./utils/cookie";
 
-const GITHUB_BASE_URL = "https://api.github.com/graphql";
+const GRAPHQL_BASE_URL = "https://gragitty.herokuapp.com/graphql";
 
 const httpLink = new HttpLink({
-  uri: GITHUB_BASE_URL,
-  headers: {
-    authorization: `Bearer ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`
-  }
+  uri: GRAPHQL_BASE_URL
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = getCookie('x-token', "");
+  return {
+    headers: {
+      ...headers,
+      'x-token': token
+    }
+  };
 });
 
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache
 });
 
