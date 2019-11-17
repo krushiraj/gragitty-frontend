@@ -35,7 +35,7 @@ const ProfileDetails = ({
         </a>
       </div>
       <div className="flex items-center flex-col mx-auto h-auto lg:w-1/3 sm:w-full">
-        <img src={profilePic} alt={username} className="rounded-full m-2" />
+        <img src={profilePic} alt={username} className="rounded-full m-2 w-1/2" />
         <table className="table-auto text-left my-2">
           <tbody>
             <tr>
@@ -95,6 +95,8 @@ export default () => (
             );
           } else if (data.currentUser) {
             return <ProfileDetails {...data.currentUser} />
+          } else {
+            return <div>Something is not right. Please try later</div>
           }
         }
       }

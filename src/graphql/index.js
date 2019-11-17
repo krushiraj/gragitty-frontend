@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const GET_CURRENT_USER = gql`
   {
-    allUsers {
+    currentUser {
       name
       username
       email
