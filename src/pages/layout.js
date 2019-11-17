@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { checkLoggedIn } from "../utils/constants";
+import { isLoggedIn } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
+import { setCookie, getCookie, deleteCookie } from "../utils/cookie";
 
 const getPathFromPathName = (pathname) => (
   (pathname.split('/')[1]) ||
@@ -51,15 +52,41 @@ const getPageByLocation = (path, search, isLoggedIn) => {
   }
 }
 
+const handleComponentMountEffect = () => {
+  fetch("https://gragitty.herokuapp.com/", {
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "https://gragitty.netlify.com/",
+      "x-token": getCookie("x-token", "")
+    },
+    method: "GET"
+  })
+    .then(res => res.json())
+    .then(({ auth, token, newToken }) => {
+      if (newToken) {
+        setCookie("x-token", token);
+      }
+      if (auth) {
+        console.log("Token valid", { auth, newToken });
+      } else {
+        deleteCookie("x-token");
+        deleteCookie("bearer-auth-id");
+        console.log("Token expired", { auth, newToken });
+      }
+    })
+    .catch(console.error);
+};
+
 export default withRouter(({ location: {pathname, search} }) => {
   const path = getPathFromPathName(pathname)
-  const [isLoggedIn, setLoggedIn] = useState(false)
-  checkLoggedIn(setLoggedIn);
+  useEffect(handleComponentMountEffect)
   return (
     <div className="m-0">
-      <NavLayout page={path} isLoggedIn={isLoggedIn}/>
+      <NavLayout page={path} isLoggedIn={isLoggedIn()}/>
       <div className="lg:p-4 sm:p-2 lg:mx-64">
-        {getPageByLocation(path, search, isLoggedIn)}
+        {getPageByLocation(path, search, isLoggedIn())}
       </div>
     </div>
   );
