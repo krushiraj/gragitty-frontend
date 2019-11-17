@@ -40,8 +40,10 @@ export const checkLoggedIn = (setLoggedIn) => (
     method: "GET"
   }).then(res => res.json())
     .then(({ auth, token, newToken }) => {
-      if (auth) {
+      if (newToken) {
         setCookie('x-token', token)
+      }
+      if (auth) {
         setLoggedIn(true)
         console.log('Token valid', {auth, newToken})
       } else {

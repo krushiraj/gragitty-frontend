@@ -24,7 +24,7 @@ const getSearchObjectFromString = (searchStr) => {
 const getPageByLocation = (path, search, isLoggedIn) => {
   const { page, isPrivate, redirectUrl } = pageMapping[path]
   const Page = page
-
+  console.log({isPrivate, isLoggedIn})
   if (isPrivate) {
     if(isLoggedIn) {
       return (
