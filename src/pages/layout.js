@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { isLoggedIn } from "../utils/constants";
+import { checkLoggedIn } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
 
 const getPathFromPathName = (pathname) => (
@@ -48,9 +48,12 @@ const getPageByLocation = (path, search, isLoggedIn) => {
 
 export default withRouter(({ location: {pathname, search} }) => {
   const path = getPathFromPathName(pathname)
+  const [isLoggedIn, setLoggedIn] = useState(false)
+  checkLoggedIn(setLoggedIn);
+  console.log({isLoggedIn})
   return (
     <div className="m-0">
-      <NavLayout page={path} isLoggedIn={isLoggedIn()}/>
+      <NavLayout page={path} isLoggedIn={isLoggedIn}/>
       <div className="lg:p-4 sm:p-2 lg:mx-64">{getPageByLocation(path, search, isLoggedIn)}</div>
     </div>
   );
