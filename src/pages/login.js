@@ -68,7 +68,7 @@ const GragittyTokenInfo = ({ token, fetched, error }) =>
   );
 
 
-const UserNotLoggedInView = ({ search }) => (
+const UserNotLoggedInView = ({ search, state }) => (
     search &&
     (search['bearer-success'] || search.success)
   ) ? (
@@ -76,7 +76,7 @@ const UserNotLoggedInView = ({ search }) => (
       <p>We are logging you in.</p>
       <BearerAuthInfo bearerSuccess={search["bearer-success"]} />
       <GragittyAuthInfo success={search.success} />
-      <GragittyTokenInfo {...this.state} />
+      <GragittyTokenInfo {...state} />
       <Loading />
     </div>
   ) : (
@@ -147,7 +147,7 @@ export default class LoginPage extends React.Component {
       {
         isLoggedIn ?
         <UserLoggedInView/> :
-        <UserNotLoggedInView search={search} />
+        <UserNotLoggedInView search={search} state={this.state} />
       }
     </div>
   }
