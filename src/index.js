@@ -19,11 +19,11 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = getCookie('x-token');
+  const token = getCookie('x-token', "");
   return {
     headers: {
       ...headers,
-      'x-token': token || ""
+      'x-token': token
     }
   };
 });

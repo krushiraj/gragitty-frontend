@@ -40,7 +40,7 @@ export const checkLoggedIn = (setLoggedIn) => (
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "https://gragitty.netlify.com/",
-      "x-token": getCookie("x-token")
+      "x-token": getCookie("x-token", "")
     },
     method: "GET"
   }).then(res => res.json())

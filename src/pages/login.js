@@ -107,8 +107,8 @@ export default class LoginPage extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "x-token": getCookie("x-token")
+          "Access-Control-Allow-Origin": "https://gragitty.netlify.com",
+          "x-token": getCookie("x-token", "")
         },
         method: "GET"
       })
