@@ -1,7 +1,12 @@
 import React from 'react'
+import { Query } from "react-apollo";
 
-import "../../styles/my-styles.css"
-import { anonymousProfilePicSrc, pageNameToPathMapping } from '../../utils/constants';
+import "../../styles/my-styles.css";
+import {
+  anonymousProfilePicSrc,
+  pageNameToPathMapping
+} from "../../utils/constants";
+import { GET_CURRENT_USER__USERNAME_PROPIC } from "../../graphql";
 
 const GragittyNavLogo = () => (
   <div className="flex-1 flex items-center">
@@ -45,23 +50,34 @@ const ProfileMenuItem = ({ isLoggedIn }) => {
       className="lg:ml-4 flex items-center justify-start lg:mb-0 mb-4 pointer-cursor"
     >
       {isLoggedIn ? (
-        <img
-          id="profile-pic"
-          className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
-          src="https://pbs.twimg.com/profile_images/1128143121475342337/e8tkhRaz_normal.jpg"
-          alt="Andy Leverenz"
-        />
+        <Query query={GET_CURRENT_USER__USERNAME_PROPIC}>
+          {({ data, loading, error }) => {
+            if (error) {
+              console.error(error)
+            }
+            return !loading && !error &&
+              data.currentUser && (
+                <img
+                  id="profile-pic"
+                  className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
+                  src={data.currentUser.profilePic}
+                  alt={data.currentUser.name}
+                />
+              )
+            }
+          }
+        </Query>
       ) : (
         <img
           id="login-pic"
           className="menu-item m-auto rounded-full w-10 h-10 border-2 border-transparent hover:border-green-400"
           src={anonymousProfilePicSrc}
-          alt="Andy Leverenz"
+          alt="Gragitty User"
         />
       )}
     </a>
   );
-}
+};
 
 const NavMenuItems = ({ isLoggedIn }) => (
   <div className="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
