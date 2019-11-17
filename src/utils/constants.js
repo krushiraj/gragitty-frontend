@@ -34,7 +34,7 @@ export const checkLoggedIn = (setLoggedIn) => (
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "https://gragitty.netlify.com/",
       "x-token": getCookie("x-token")
     },
     method: "GET"
