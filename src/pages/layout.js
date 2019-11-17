@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { isLoggedIn } from "../utils/constants";
+import { isLoggedIn, BASE_URL } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
-import { setCookie, getCookie, deleteCookie } from "../utils/cookie";
+import { setCookie, getCookie } from "../utils/cookie";
 
 const getPathFromPathName = (pathname) => (
   (pathname.split('/')[1]) ||
@@ -53,7 +53,7 @@ const getPageByLocation = (path, search, isLoggedIn) => {
 }
 
 const handleComponentMountEffect = () => {
-  fetch("https://gragitty.herokuapp.com/", {
+  fetch(BASE_URL, {
     credentials: "include",
     headers: {
       Accept: "application/json",
@@ -71,8 +71,6 @@ const handleComponentMountEffect = () => {
       if (auth) {
         console.log("Token valid", { auth, newToken });
       } else {
-        deleteCookie("x-token");
-        deleteCookie("bearer-auth-id");
         console.log("Token expired", { auth, newToken });
       }
     })

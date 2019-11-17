@@ -101,28 +101,6 @@ export default class LoginPage extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.isLoggedIn) {
-    //   fetch("https://gragitty.herokuapp.com/", {
-    //     credentials: "include",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "https://gragitty.netlify.com",
-    //       "x-token": getCookie("x-token", "")
-    //     },
-    //     method: "GET"
-    //   })
-    //     .then(res => res.json())
-    //     .then(({ auth, token, newToken }) => {
-    //       if (auth && newToken) {
-    //         setCookie('x-token', token)
-    //         console.log('Token has been refreshed', {auth, newToken})
-    //       } else {
-    //         console.log('Token has not been refreshed', {auth, newToken})
-    //       }
-    //     })
-    //     .catch(console.error);
-    // }
     const search = this.props.search
     if (this.state.token === '') {
       if (search['bearer-success'] === 'true') {
@@ -139,6 +117,7 @@ export default class LoginPage extends React.Component {
           this.setState({ fetched: true, error: true })
         }
       }
+      console.log({state: this.state})
     }
   }
 

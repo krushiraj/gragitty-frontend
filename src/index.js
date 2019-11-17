@@ -11,11 +11,10 @@ import App from "./App/App";
 
 import "./index.css";
 import { getCookie } from "./utils/cookie";
-
-const GRAPHQL_BASE_URL = "https://gragitty.herokuapp.com/graphql";
+import { GRAPHQL_URL } from "./utils/constants";
 
 const httpLink = new HttpLink({
-  uri: GRAPHQL_BASE_URL
+  uri: GRAPHQL_URL
 });
 
 const authLink = setContext((_, { headers }) => {
