@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Bearer, factory } from "@bearer/react";
 
-import { CLIENT_ID } from '../../utils'
+import { CLIENT_ID } from '../../utils/constants'
 import { setCookie } from '../../utils/cookie'
 
 import "../../styles/my-styles.css";
