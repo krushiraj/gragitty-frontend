@@ -33,7 +33,10 @@ export const pageMapping = {
 
 export const masterRedirectUrl = "/login";
 
-export const checkLoggedIn = (setLoggedIn) => (
+export const checkLoggedIn = (setLoggedIn) => {
+  if (getCookie('x-token') && getCookie('bearer-auth-id')) {
+    setLoggedIn(true)
+  }
   fetch("https://gragitty.herokuapp.com/", {
     credentials: "include",
     headers: {
@@ -57,4 +60,4 @@ export const checkLoggedIn = (setLoggedIn) => (
       }
     })
     .catch(console.error)
-)
+}
