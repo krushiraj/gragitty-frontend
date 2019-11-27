@@ -25,13 +25,8 @@ const getSearchObjectFromString = (searchStr) => {
 const getPageByLocation = (path, search, isLoggedIn) => {
   const { page, isPrivate, redirectUrl } = pageMapping[path]
   const Page = page
-  console.log({
-    page, isLoggedIn, isPrivate, redirectUrl
-  })
   if (isPrivate) {
-    // console.log('is private')
     if(isLoggedIn) {
-      // console.log('is logged in')
       return (
         <Page
           search={getSearchObjectFromString(search)}
@@ -39,7 +34,6 @@ const getPageByLocation = (path, search, isLoggedIn) => {
         />
       );
     } else {
-      // console.log('redirecting')
       window.location = redirectUrl || masterRedirectUrl;
     }
   } else {
