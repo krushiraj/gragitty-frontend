@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
 import NavLayout from "../components/common/nav-layout"
-import { isLoggedIn, BASE_URL } from "../utils/constants";
+import { isLoggedIn, BASE_URL, ORIGIN_URL } from "../utils/constants";
 import { pageMapping, masterRedirectUrl } from "../utils/constants"
 import { setCookie, getCookie } from "../utils/cookie";
 
@@ -52,7 +52,7 @@ const handleComponentMountEffect = () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "https://gragitty.netlify.com/",
+      "Access-Control-Allow-Origin": ORIGIN_URL,
       "x-token": getCookie("x-token", "")
     },
     method: "GET"
