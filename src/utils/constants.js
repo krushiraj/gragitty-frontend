@@ -14,6 +14,10 @@ export const BASE_URL = process.env.NODE_ENV === 'development' ?
   'http://localhost:8000' :
   'https://gragitty.herokuapp.com'
 
+export const ORIGIN_URL = process.env.NODE_ENV === 'development' ?
+  'http://localhost:3000' :
+  'https://gragitty.netlify.com/'
+
 export const CLIENT_ID =
   "pk_production_153995bec82bc38944048fc2d0e8d9f5b16ce9654f287c11dd";
 export const GRAPHQL_URL = `${BASE_URL}/graphql`;
