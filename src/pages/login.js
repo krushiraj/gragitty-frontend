@@ -117,6 +117,7 @@ export default class LoginPage extends React.Component {
           this.setState({ fetched: true, error: true })
         }
       }
+      console.log({state: this.state})
     }
   }
 
