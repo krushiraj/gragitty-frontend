@@ -4,6 +4,7 @@ import GithubCalendarWeek from "./github-calendar-week";
 import GithubCalendarMonthStrip from "./github-calendar-month-strip";
 import GithubCalendarWeekStrip from "./github-calendar-week-strip";
 import Cell from "./cell";
+import Controls from "./controls";
 
 export default class GithubCalendar extends React.Component {
   state = {
@@ -26,11 +27,18 @@ export default class GithubCalendar extends React.Component {
 
   render() {
     return (
-      <div className="flex flex-row m-auto">
+      <div className="flex flex-col m-auto">
+        <div className="flex flex-row w-auto m-auto">
+          <h1 className="text-xl font-semibold">Github Calendar</h1>
+        </div>
+        <div className="flex flex-row w-full">
+          <Cell editable={false} color={"bg-transparent"} />
+          <Controls />
+        </div>
         <div className="flex flex-row w-full">
           <div className="flex flex-col w-auto">
             <div className="flex flex-row w-auto">
-              <Cell color={"bg-transparent"} />
+              <Cell editable={false} color={"bg-transparent"} />
             </div>
             <div className="flex flex-row w-full">
               <GithubCalendarWeekStrip />
