@@ -1,3 +1,5 @@
 import React from "react";
 
-export default () => <div>This is Calendar page</div>;
+import GithubCalendar from "../components/github-calendar/github-calendar";
+
+export default () => <div className="flex flex-col m-auto"><GithubCalendar/></div>;
